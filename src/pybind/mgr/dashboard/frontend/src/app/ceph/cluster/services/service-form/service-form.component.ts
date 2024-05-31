@@ -546,9 +546,6 @@ export class ServiceFormComponent extends CdForm implements OnInit {
     this.poolService.getList().subscribe((resp: Pool[]) => {
       this.pools = resp;
       this.rbdPools = this.pools.filter(this.rbdService.isRBDPool);
-      if (!this.editing && this.serviceType) {
-        this.onServiceTypeChange(this.serviceType);
-      }
     });
 
     if (this.editing) {
@@ -754,8 +751,6 @@ export class ServiceFormComponent extends CdForm implements OnInit {
       case 'smb':
         this.serviceForm.get('count').setValue(1);
         break;
-      default:
-        this.serviceForm.get('count').setValue(null);
     }
   }
 
@@ -844,17 +839,13 @@ export class ServiceFormComponent extends CdForm implements OnInit {
     );
   }
 
-  setNvmeServiceId() {
-    const pool = this.serviceForm.get('pool').value;
-    const group = this.serviceForm.get('group').value;
-    if (pool && group) {
-      this.serviceForm.get('service_id').setValue(`${pool}.${group}`);
-    } else if (pool) {
-      this.serviceForm.get('service_id').setValue(pool);
-    } else if (group) {
-      this.serviceForm.get('service_id').setValue(group);
-    } else {
-      this.serviceForm.get('service_id').setValue(null);
+
+  setNvmeofServiceId(): void {
+    const defaultRbdPool: string = this.rbdPools.find((p: Pool) => p.pool_name === 'rbd')
+      ?.pool_name;
+    if (defaultRbdPool) {
+      this.serviceForm.get('pool').setValue(defaultRbdPool);
+      this.serviceForm.get('service_id').setValue(defaultRbdPool);
     }
   }
 
@@ -895,9 +886,13 @@ export class ServiceFormComponent extends CdForm implements OnInit {
     }
   }
 
-  onPlacementChange(selected: string) {
-    if (selected === 'label') {
-      this.serviceForm.get('count').setValue(null);
+
+  onBlockPoolChange() {
+    const selectedBlockPool = this.serviceForm.get('pool').value;
+    if (selectedBlockPool) {
+      this.serviceForm.get('service_id').setValue(selectedBlockPool);
+    } else {
+      this.serviceForm.get('service_id').setValue(null);
     }
   }
 
