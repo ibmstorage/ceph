@@ -59,7 +59,8 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
     private actionLabels: ActionLabelsI18n,
     private modalService: ModalService,
     private rgwMultisiteService: RgwMultisiteService,
-    private taskWrapper: TaskWrapperService
+    private taskWrapper: TaskWrapperService,
+    private cdsModalService: ModalCdsService
   ) {
     this.symmetricalFlowCols = [
       {
@@ -242,7 +243,7 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
       selection = this.dirFlowSelection;
     }
     const flowIds = selection.selected.map((flow: any) => flow.id);
-    this.modalService.show(CriticalConfirmationModalComponent, {
+    this.cdsModalService.show(CriticalConfirmationModalComponent, {
       itemDescription: selection.hasSingleSelection ? $localize`Flow` : $localize`Flows`,
       itemNames: flowIds,
       bodyTemplate: this.deleteTpl,
@@ -307,7 +308,7 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
   deletePipe() {
     this.resourceType = MultisiteResourceType.pipe;
     const pipeIds = this.pipeSelection.selected.map((pipe: any) => pipe.id);
-    this.modalService.show(CriticalConfirmationModalComponent, {
+    this.cdsModalService.show(CriticalConfirmationModalComponent, {
       itemDescription: this.pipeSelection.hasSingleSelection ? $localize`Pipe` : $localize`Pipes`,
       itemNames: pipeIds,
       bodyTemplate: this.deleteTpl,

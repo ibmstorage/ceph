@@ -68,7 +68,8 @@ export class CephfsSubvolumeSnapshotsListComponent implements OnInit, OnChanges 
     private authStorageService: AuthStorageService,
     private cdDatePipe: CdDatePipe,
     private taskWrapper: TaskWrapperService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdsModalService: ModalCdsService
   ) {
     this.permissions = this.authStorageService.getPermissions();
   }
@@ -231,7 +232,7 @@ export class CephfsSubvolumeSnapshotsListComponent implements OnInit, OnChanges 
     const subVolumeName = this.activeSubVolumeName;
     const subVolumeGroupName = this.activeGroupName;
     const fsName = this.fsName;
-    this.modalRef = this.modalService.show(CriticalConfirmationModalComponent, {
+    this.modalRef = this.cdsModalService.show(CriticalConfirmationModalComponent, {
       actionDescription: this.actionLabels.REMOVE,
       itemNames: [snapshotName],
       itemDescription: 'Snapshot',
@@ -252,7 +253,7 @@ export class CephfsSubvolumeSnapshotsListComponent implements OnInit, OnChanges 
             )
           })
           .subscribe({
-            complete: () => this.modalRef.close(),
+            complete: () => this.cdsModalService.dismissAll(),
             error: () => this.modalRef.componentInstance.stopLoadingSpinner()
           })
     });
