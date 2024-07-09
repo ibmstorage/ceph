@@ -25,7 +25,7 @@
 
       <!-- Name -->
       <div class="form-item">
-        <cds-text-label [invalid]="!rbdForm.controls['name'].valid && (rbdForm.controls['name'].dirty || rbdForm.controls['name'].touched)"
+        <cds-text-label [invalid]="!rbdForm.controls['name'].valid && (rbdForm.controls['name'].dirty)"
                         [invalidText]="nameError"
                         for="name"
                         i18n
@@ -36,7 +36,7 @@
                  id="name"
                  name="name"
                  formControlName="name"
-                 [invalid]="!rbdForm.controls['name'].valid && (rbdForm.controls['name'].dirty || rbdForm.controls['name'].touched)"
+                 [invalid]="!rbdForm.controls['name'].valid && (rbdForm.controls['name'].dirty)"
                  autofocus>
         </cds-text-label>
         <ng-template #nameError>
@@ -320,7 +320,7 @@
         <cds-text-label for="schedule"
                         helperText="Create Mirror-Snapshots automatically on a periodic basis. The interval can be specified in days, hours, or minutes using d, h, m suffix respectively. To create mirror snapshots, you must import or create and have available peers to mirror"
                         cdRequiredField="Schedule Interval"
-                        [invalid]="!rbdForm.controls['schedule'].valid && (rbdForm.controls['schedule'].dirty || rbdForm.controls['schedule'].touched)"
+                        [invalid]="!rbdForm.controls['schedule'].valid && (rbdForm.controls['schedule'].dirty)"
                         [invalidText]="scheduleError"
                         i18n>Schedule Interval
           <input cdsText
@@ -330,7 +330,7 @@
                  name="schedule"
                  formControlName="schedule"
                  [disabled]="(peerConfigured === false) ? true : null"
-                 [invalid]="!rbdForm.controls['schedule'].valid && (rbdForm.controls['schedule'].dirty || rbdForm.controls['schedule'].touched)">
+                 [invalid]="!rbdForm.controls['schedule'].valid && (rbdForm.controls['schedule'].dirty)">
         </cds-text-label>
         <ng-template #scheduleError>
           <span *ngIf="rbdForm.showError('schedule', formDir, 'required')"
@@ -367,7 +367,7 @@
                     for="dataPool"
                     name="dataPool"
                     id="dataPool"
-                    [invalid]="!rbdForm.controls['dataPool'].valid && (rbdForm.controls['dataPool'].dirty || rbdForm.controls['dataPool'].touched)"
+                    [invalid]="!rbdForm.controls['dataPool'].valid && (rbdForm.controls['dataPool'].dirty)"
                     [invalidText]="dataPoolError"
                     formControlName="dataPool"
                     cdRequiredField="Data pool"
@@ -432,7 +432,7 @@
       <div class="form-item">
         <cds-text-label for="size"
                         i18n
-                        [invalid]="!rbdForm.controls['size'].valid && (rbdForm.controls['size'].dirty || rbdForm.controls['size'].touched)"
+                        [invalid]="!rbdForm.controls['size'].valid && (rbdForm.controls['size'].dirty)"
                         [invalidText]="sizeError"
                         cdRequiredField="Size">Size
           <input cdsText
@@ -442,7 +442,7 @@
                  name="size"
                  formControlName="size"
                  defaultUnit="GiB"
-                 [invalid]="!rbdForm.controls['size'].valid && (rbdForm.controls['size'].dirty || rbdForm.controls['size'].touched)"
+                 [invalid]="!rbdForm.controls['size'].valid && (rbdForm.controls['size'].dirty)"
                  cdDimlessBinary>
         </cds-text-label>
         <ng-template #sizeError>
@@ -513,7 +513,7 @@
                       name="stripingUnit"
                       formControlName="stripingUnit"
                       cdRequiredField="Striping Unit"
-                      [invalid]="!rbdForm.controls['stripingUnit'].valid && (rbdForm.controls['stripingUnit'].dirty || rbdForm.controls['stripingUnit'].touched)"
+                      [invalid]="!rbdForm.controls['stripingUnit'].valid && (rbdForm.controls['stripingUnit'].dirty)"
                       [invalidText]="stripingUnitError">
             <option [ngValue]="null">-- Select stripe unit --</option>
             <option *ngFor="let objectSize of objectSizes"
@@ -540,7 +540,7 @@
                       formControlName="stripingCount"
                       cdRequiredField="Striping Count"
                       [min]="1"
-                      [invalid]="!rbdForm.controls['stripingCount'].valid && (rbdForm.controls['stripingCount'].dirty || rbdForm.controls['stripingCount'].touched)"
+                      [invalid]="!rbdForm.controls['stripingCount'].valid && (rbdForm.controls['stripingCount'].dirty)"
                       [invalidText]="stripingCountError"
                       [required]="true"></cds-number>
           <ng-template #stripingCountError>
@@ -560,7 +560,8 @@
 
       <cd-form-button-panel (submitActionEvent)="submit()"
                             [form]="formDir"
-                            [submitText]="(action | titlecase) + ' ' + (resource | upperFirst)"></cd-form-button-panel>
+                            [submitText]="(action | titlecase) + ' ' + (resource | upperFirst)"
+                            wrappingClass="text-right"></cd-form-button-panel>
 
     </form>
   </ng-container>
