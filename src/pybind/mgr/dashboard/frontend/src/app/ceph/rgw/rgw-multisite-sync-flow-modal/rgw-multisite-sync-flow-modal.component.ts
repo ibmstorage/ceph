@@ -57,6 +57,7 @@ export class RgwMultisiteSyncFlowModalComponent implements OnInit {
       this.createDirectionalFlowForm();
       this.currentFormGroupContext = _.cloneDeep(this.syncPolicyDirectionalFlowForm);
     }
+    this.currentFormGroupContext.get('bucket_name').disable();
     if (this.editing) {
       this.currentFormGroupContext.patchValue({
         flow_id: this.flowSelectedRow.id,

@@ -44,12 +44,16 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
   modalRef: NgbModalRef;
   symmetricalFlowData: any = [];
   directionalFlowData: any = [];
+  pipeData: any = [];
   symmetricalFlowCols: CdTableColumn[];
   directionalFlowCols: CdTableColumn[];
+  pipeCols: CdTableColumn[];
   symFlowTableActions: CdTableAction[];
   dirFlowTableActions: CdTableAction[];
+  pipeTableActions: CdTableAction[];
   symFlowSelection = new CdTableSelection();
   dirFlowSelection = new CdTableSelection();
+  pipeSelection = new CdTableSelection();
 
   constructor(
     private actionLabels: ActionLabelsI18n,
@@ -78,6 +82,33 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
       {
         name: 'Destination Zone',
         prop: 'dest_zone',
+        flexGrow: 1
+      }
+    ];
+    this.pipeCols = [
+      {
+        name: 'Name',
+        prop: 'id',
+        flexGrow: 1
+      },
+      {
+        name: 'Source Zone',
+        prop: 'source.zones',
+        flexGrow: 1
+      },
+      {
+        name: 'Destination Zone',
+        prop: 'dest.zones',
+        flexGrow: 1
+      },
+      {
+        name: 'Source Bucket',
+        prop: 'source.bucket',
+        flexGrow: 1
+      },
+      {
+        name: 'Destination Bucket',
+        prop: 'dest.bucket',
         flexGrow: 1
       }
     ];
@@ -149,11 +180,11 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
     if (changes.expandedRow.currentValue && changes.expandedRow.currentValue.groupName) {
       this.symmetricalFlowData = [];
       this.directionalFlowData = [];
-      this.loadFlowData();
+      this.loadData();
     }
   }
 
-  loadFlowData(context?: any) {
+  loadData(context?: any) {
     if (this.expandedRow) {
       this.rgwMultisiteService
         .getSyncPolicyGroup(this.expandedRow.groupName, this.expandedRow.bucket)
@@ -161,6 +192,7 @@ export class RgwMultisiteSyncPolicyDetailsComponent implements OnChanges {
           (policy: any) => {
             this.symmetricalFlowData = policy.data_flow[FlowType.symmetrical] || [];
             this.directionalFlowData = policy.data_flow[FlowType.directional] || [];
+            this.pipeData = policy.pipes || [];
           },
           () => {
             if (context) {
