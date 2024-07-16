@@ -40,10 +40,12 @@ const UI_API_PATH = 'ui-api/nvmeof';
 export class NvmeofService {
   constructor(private http: HttpClient) {}
 
+  // Gateways
   listGateways() {
     return this.http.get(`${BASE_URL}/gateway`);
   }
 
+  // Subsystems
   listSubsystems() {
     return this.http.get(`${BASE_URL}/subsystem`);
   }
@@ -72,7 +74,22 @@ export class NvmeofService {
     );
   }
 
-  // listeners
+  // Initiators
+  getInitiators(subsystemNQN: string) {
+    return this.http.get(`${BASE_URL}/subsystem/${subsystemNQN}/host`);
+  }
+
+  updateInitiators(subsystemNQN: string, hostNQN: string) {
+    return this.http.put(
+      `${BASE_URL}/subsystem/${subsystemNQN}/host/${hostNQN}`,
+      {},
+      {
+        observe: 'response'
+      }
+    );
+  }
+
+  // Listeners
   listListeners(subsystemNQN: string) {
     return this.http.get(`${BASE_URL}/subsystem/${subsystemNQN}/listener`);
   }
@@ -93,5 +110,32 @@ export class NvmeofService {
         }
       }
     );
+  }
+
+  // Namespaces
+  listNamespaces(subsystemNQN: string) {
+    return this.http.get(`${BASE_URL}/subsystem/${subsystemNQN}/namespace`);
+  }
+
+  getNamespace(subsystemNQN: string, nsid: string) {
+    return this.http.get(`${BASE_URL}/subsystem/${subsystemNQN}/namespace/${nsid}`);
+  }
+
+  createNamespace(subsystemNQN: string, request: NamespaceCreateRequest) {
+    return this.http.post(`${BASE_URL}/subsystem/${subsystemNQN}/namespace`, request, {
+      observe: 'response'
+    });
+  }
+
+  updateNamespace(subsystemNQN: string, nsid: string, request: NamespaceEditRequest) {
+    return this.http.patch(`${BASE_URL}/subsystem/${subsystemNQN}/namespace/${nsid}`, request, {
+      observe: 'response'
+    });
+  }
+
+  deleteNamespace(subsystemNQN: string, nsid: string) {
+    return this.http.delete(`${BASE_URL}/subsystem/${subsystemNQN}/namespace/${nsid}`, {
+      observe: 'response'
+    });
   }
 }
