@@ -71,4 +71,27 @@ export class NvmeofService {
       })
     );
   }
+
+  // listeners
+  listListeners(subsystemNQN: string) {
+    return this.http.get(`${BASE_URL}/subsystem/${subsystemNQN}/listener`);
+  }
+
+  createListener(subsystemNQN: string, request: ListenerRequest) {
+    return this.http.post(`${BASE_URL}/subsystem/${subsystemNQN}/listener`, request, {
+      observe: 'response'
+    });
+  }
+
+  deleteListener(subsystemNQN: string, hostName: string, traddr: string, trsvcid: string) {
+    return this.http.delete(
+      `${BASE_URL}/subsystem/${subsystemNQN}/listener/${hostName}/${traddr}`,
+      {
+        observe: 'response',
+        params: {
+          trsvcid
+        }
+      }
+    );
+  }
 }
