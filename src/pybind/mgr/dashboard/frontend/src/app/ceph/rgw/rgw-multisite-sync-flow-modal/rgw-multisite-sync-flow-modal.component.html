@@ -1,7 +1,6 @@
 <cd-modal [modalRef]="activeModal">
-  <ng-container
-    i18n="form title"
-    class="modal-title">{{ action | titlecase }} {{ groupType | upperFirst }} Flow</ng-container>
+  <ng-container i18n="form title"
+                class="modal-title">{{ action | titlecase }} {{ groupType | upperFirst }} Flow</ng-container>
 
   <ng-container class="modal-content">
     <form name="flowForm"
@@ -82,30 +81,26 @@
   </ng-container>
 </cd-modal>
 
-<ng-template
-  #zoneMultiSelect
-  let-name="name"
-  let-zone="zone">
-  <cd-select-badges
-    [id]="name"
-    [name]="name"
-    [customBadges]="zone.customBadges"
-    [customBadgeValidators]="zone.data.validators"
-    [messages]="zone.data.messages"
-    [data]="zone.data.selected"
-    [options]="zone.data.available"
-    (selection)="zoneSelection()">
+<ng-template #zoneMultiSelect
+             let-name="name"
+             let-zone="zone">
+  <cd-select-badges [id]="name"
+                    [name]="name"
+                    [customBadges]="zone.customBadges"
+                    [customBadgeValidators]="zone.data.validators"
+                    [messages]="zone.data.messages"
+                    [data]="zone.data.selected"
+                    [options]="zone.data.available"
+                    (selection)="zoneSelection()">
   </cd-select-badges>
-  <i
-    *ngIf="zone.data.selected.length <= 0"
-    i18n-title
-    title="Flow should be associated with {{name?.split('_')}}"
-    class="{{ icons.warning }} icon-warning-color">
+  <i *ngIf="zone.data.selected.length <= 0"
+     i18n-title
+     title="Flow should be associated with {{name?.split('_').join(' ')}}"
+     class="{{ icons.warning }} icon-warning-color">
   </i>
-  <span
-    class="invalid-feedback"
-    *ngIf="currentFormGroupContext.showError(name, frm, 'required')"
-    i18n>{{name?.split('_')}} selection is required!
+  <span class="invalid-feedback"
+        *ngIf="currentFormGroupContext.showError(name, frm, 'required')"
+        i18n>{{name?.split('_').join(' ')}} selection is required!
   </span>
 </ng-template>
 

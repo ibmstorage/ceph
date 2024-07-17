@@ -2,9 +2,12 @@ import { PageHelper } from '../page-helper.po';
 
 const WAIT_TIMER = 1000;
 const pages = {
-  index: { url: '#/rgw/multisite', id: 'cd-rgw-multisite-details' },
-  create: { url: '#/rgw/multisite/sync-policy/create', id: 'cd-rgw-multisite-sync-policy-form' },
-  edit: { url: '#/rgw/multisite/sync-policy/edit', id: 'cd-rgw-multisite-sync-policy-form' }
+  index: { url: '#/rgw/multisite/sync-policy', id: 'cd-rgw-multisite-sync-policy' },
+  create: {
+    url: '#/rgw/multisite/sync-policy/(modal:create)',
+    id: 'cd-rgw-multisite-sync-policy-form'
+  },
+  edit: { url: '#/rgw/multisite/sync-policy/(modal:edit', id: 'cd-rgw-multisite-sync-policy-form' }
 };
 export class MultisitePageHelper extends PageHelper {
   pages = pages;

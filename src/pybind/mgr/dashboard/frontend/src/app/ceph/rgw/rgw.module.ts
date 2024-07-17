@@ -61,6 +61,8 @@ import { RgwMultisiteSyncPolicyFormComponent } from './rgw-multisite-sync-policy
 import { RgwMultisiteSyncPolicyDetailsComponent } from './rgw-multisite-sync-policy-details/rgw-multisite-sync-policy-details.component';
 import { RgwMultisiteSyncFlowModalComponent } from './rgw-multisite-sync-flow-modal/rgw-multisite-sync-flow-modal.component';
 import { RgwMultisiteSyncPipeModalComponent } from './rgw-multisite-sync-pipe-modal/rgw-multisite-sync-pipe-modal.component';
+import { RgwMultisiteTabsComponent } from './rgw-multisite-tabs/rgw-multisite-tabs.component';
+import { RgwMultisiteWizardComponent } from './rgw-multisite-wizard/rgw-multisite-wizard.component';
 
 @NgModule({
   imports: [
@@ -126,7 +128,9 @@ import { RgwMultisiteSyncPipeModalComponent } from './rgw-multisite-sync-pipe-mo
     RgwMultisiteSyncPolicyFormComponent,
     RgwMultisiteSyncPolicyDetailsComponent,
     RgwMultisiteSyncFlowModalComponent,
-    RgwMultisiteSyncPipeModalComponent
+    RgwMultisiteSyncPipeModalComponent,
+    RgwMultisiteTabsComponent,
+    RgwMultisiteWizardComponent
   ],
   providers: [TitleCasePipe]
 })
