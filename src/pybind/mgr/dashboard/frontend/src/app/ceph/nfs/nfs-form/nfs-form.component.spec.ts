@@ -92,7 +92,7 @@ describe('NfsFormComponent', () => {
       clients: [],
       cluster_id: 'mynfs',
       fsal: { fs_name: '', name: 'CEPH', user_id: '' },
-      path: '/',
+      path: '',
       protocolNfsv4: true,
       protocolNfsv3: true,
       pseudo: '',

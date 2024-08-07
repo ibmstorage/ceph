@@ -34,6 +34,7 @@ import { CephfsSubvolumeGroupService } from '~/app/shared/api/cephfs-subvolume-g
 import { DEFAULT_SUBVOLUME_GROUP } from '~/app/shared/constants/cephfs.constant';
 import { RgwUserService } from '~/app/shared/api/rgw-user.service';
 import { RgwExportType } from '../nfs-list/nfs-list.component';
+import { DEFAULT_SUBVOLUME_GROUP } from '~/app/shared/constants/cephfs.constant';
 
 @Component({
   selector: 'cd-nfs-form',
@@ -365,7 +366,7 @@ export class NfsFormComponent extends CdForm implements OnInit {
       }),
 
       // CephFS-specific fields
-      subvolume_group: new UntypedFormControl(''),
+      subvolume_group: new UntypedFormControl(this.defaultSubVolGroup),
       subvolume: new UntypedFormControl(''),
       sec_label_xattr: new UntypedFormControl(
         'security.selinux',
@@ -585,24 +586,6 @@ export class NfsFormComponent extends CdForm implements OnInit {
     } else {
       return of([]);
     }
-  }
-
-  private generatePseudo() {
-    const pseudoControl = this.nfsForm.get('pseudo');
-    let newPseudo = pseudoControl?.dirty && this.nfsForm.getValue('pseudo');
-
-    if (!newPseudo) {
-      const path = this.nfsForm.getValue('path');
-      newPseudo = `/${getPathfromFsal(this.storageBackend)}`;
-
-      if (_.isString(path) && !_.isEmpty(path)) {
-        newPseudo += '/' + path;
-      } else if (!_.isEmpty(this.nfsForm.getValue('fsal').user_id)) {
-        newPseudo += '/' + this.nfsForm.getValue('fsal').user_id;
-      }
-    }
-
-    return newPseudo;
   }
 
   submitAction() {
