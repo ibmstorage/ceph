@@ -53,6 +53,11 @@ export interface CephServiceAdditionalSpec {
   join_sources: string[];
   include_ceph_users: string[];
   enable_auth: boolean;
+  https_address: string;
+  provider_display_name: string;
+  client_id: string;
+  client_secret: string;
+  oidc_issuer_url: string;
 }
 
 export interface CephServicePlacement {
