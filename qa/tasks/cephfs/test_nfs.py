@@ -121,7 +121,7 @@ class TestNFS(MgrTestCase):
                     return
         self.fail(fail_msg)
 
-    def _check_auth_ls(self, fs_name, check_in=False, user_id=None):
+    def _check_auth_ls(self, fs_name, check_in=False):
         '''
         Tests export user id creation or deletion.
         :param export_id: Denotes export number
@@ -132,9 +132,9 @@ class TestNFS(MgrTestCase):
         search_id = f'client.{user_id}' if user_id else f'{client_id}.{fs_name}'
 
         if check_in:
-            self.assertIn(search_id, output)
+            self.assertIn(f'{client_id}.{fs_name}', output)
         else:
-            self.assertNotIn(search_id, output)
+            self.assertNotIn(f'{client_id}.{fs_name}', output)
 
     def _test_idempotency(self, cmd_func, cmd_args):
         '''
@@ -239,8 +239,8 @@ class TestNFS(MgrTestCase):
         '''
         Delete an export.
         '''
-        self._nfs_cmd('export', 'rm', self.cluster_id, pseduo_path if pseduo_path else self.pseudo_path)
-        self._check_auth_ls(self.fs_name, check_in, user_id)
+        self._nfs_cmd('export', 'rm', self.cluster_id, self.pseudo_path)
+        self._check_auth_ls(self.fs_name)
 
     def _test_list_export(self):
         '''
