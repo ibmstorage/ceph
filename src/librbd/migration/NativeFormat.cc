@@ -8,9 +8,6 @@
 #include "common/errno.h"
 #include "include/scope_guard.h"
 #include "librbd/ImageCtx.h"
-#include "librbd/Utils.h"
-#include "librbd/asio/ContextWQ.h"
-#include "librbd/io/ImageDispatchSpec.h"
 #include "json_spirit/json_spirit.h"
 #include "boost/lexical_cast.hpp"
 
