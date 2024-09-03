@@ -135,6 +135,15 @@ export class CephfsVolumeFormComponent extends CdForm implements OnInit {
       this.hostService.getLabels().subscribe((resp: string[]) => {
         this.labels = resp;
       });
+      this.hostsAndLabels$ = forkJoin({
+        hosts: this.hostService.getAllHosts(),
+        labels: this.hostService.getLabels()
+      }).pipe(
+        map(({ hosts, labels }) => ({
+          hosts: hosts.map((host: any) => ({ content: host['hostname'] })),
+          labels: labels.map((label: string) => ({ content: label }))
+        }))
+      );
     }
     this.orchStatus$ = this.orchService.status();
     this.loadingReady();
