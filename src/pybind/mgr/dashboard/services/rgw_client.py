@@ -322,7 +322,9 @@ class RgwClient(RestClient):
             secret_key = Settings.RGW_API_SECRET_KEY
         except KeyError as error:
             # If the realm-specific credentials are not found, try fetching dashboard user keys
-            access_key, secret_key = _get_user_keys('dashboard')
+            rgw_service_manager = RgwServiceManager()
+            # pylint: disable=protected-access
+            access_key, secret_key = rgw_service_manager._get_user_keys('dashboard')
             if not access_key:
                 raise DashboardException(msg='Credentials not found for RGW Daemon: {}'.format(error),  # noqa E501  # pylint: disable=line-too-long
                                          http_status_code=404,
