@@ -5609,6 +5609,11 @@ def _get_parser():
     parser_bootstrap.add_argument(
         '--custom-prometheus-alerts',
         help='provide a file with custom prometheus alerts')
+    parser_bootstrap.add_argument(
+        '--yes-i-know',
+        action='store_true',
+        help='deprecated flag only here for backwards compatibility')
+
 
     parser_bootstrap.add_argument(
         '--call-home-icn',
