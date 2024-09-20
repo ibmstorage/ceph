@@ -38,6 +38,7 @@ import { OsdPgScrubModalComponent } from '../osd-pg-scrub-modal/osd-pg-scrub-mod
 import { OsdRecvSpeedModalComponent } from '../osd-recv-speed-modal/osd-recv-speed-modal.component';
 import { OsdReweightModalComponent } from '../osd-reweight-modal/osd-reweight-modal.component';
 import { OsdScrubModalComponent } from '../osd-scrub-modal/osd-scrub-modal.component';
+import { ModalCdsService } from '~/app/shared/services/modal-cds.service';
 import { CdTableFetchDataContext } from '~/app/shared/models/cd-table-fetch-data-context';
 import { Osd } from '~/app/shared/models/osd.model';
 
