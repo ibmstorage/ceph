@@ -17,6 +17,7 @@ from ..services.ceph_service import CephService
 from ..services.rgw_iam import RgwAccounts
 from ..services.rgw_client import _SYNC_GROUP_ID, NoRgwDaemonsException, \
     RgwClient, RgwMultisite, RgwMultisiteAutomation
+from ..services.rgw_iam import RgwAccounts
 from ..services.service import RgwServiceManager, wait_for_daemon_to_start
 from ..tools import json_str_to_object, str_to_bool
 from . import APIDoc, APIRouter, BaseController, CreatePermission, \
@@ -407,7 +408,7 @@ class RgwBucket(RgwRESTController):
         # then the bucket is owned by an account.
         # hence we will use dashboard user to fetch the
         # bucket info
-        return owner if owner not in accounts else _RGW_USER
+        return owner if owner not in accounts else RgwServiceManager.user
 
     def _get_versioning(self, owner, daemon_name, bucket_name):
         rgw_client = RgwClient.instance(owner, daemon_name)
