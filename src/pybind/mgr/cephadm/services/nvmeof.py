@@ -200,7 +200,7 @@ class NvmeofService(CephService):
         spec = cast(NvmeofServiceSpec,
                     self.mgr.spec_store.all_specs.get(daemon.service_name(), None))
         if not spec:
-            self.mgr.log.error(f'Failed to find spec for {daemon.name()}')
+            self.mgr.log.error(f'Failed to find spec for {daemon_name}')
             return
         pool = spec.pool
         group = spec.group
