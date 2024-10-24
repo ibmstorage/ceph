@@ -373,6 +373,7 @@ void Log::_flush_logbuf()
 
 void Log::_flush(EntryVector& t, bool crash)
 {
+  auto now = mono_clock::now();
   long len = 0;
   if (t.empty()) {
     assert(m_log_buf.empty());
@@ -444,9 +445,28 @@ void Log::_flush(EntryVector& t, bool crash)
       m_journald->log_entry(e);
     }
 
+    {
+      auto [it, _] = m_recent_thread_names.try_emplace(e.m_thread, now, DEFAULT_MAX_THREAD_NAMES);
+      auto& [t, names] = it->second;
+      if (names.size() == 0 || names.front() != e.m_thread_name.data()) {
+        names.push_front(e.m_thread_name.data());
+      }
+      t = now;
+    }
+
     m_recent.push_back(std::move(e));
   }
   t.clear();
+
+  for (auto it = m_recent_thread_names.begin(); it != m_recent_thread_names.end(); ) {
+    auto t = it->second.first;
+    auto since = now - t;
+    if (since > std::chrono::seconds(60*60*24)) {
+      it = m_recent_thread_names.erase(it);
+    } else {
+      ++it;
+    }
+  }
 
   _flush_logbuf();
 }
@@ -499,10 +519,6 @@ void Log::dump_recent()
     EntryVector t;
     t.insert(t.end(), std::make_move_iterator(m_recent.begin()), std::make_move_iterator(m_recent.end()));
     m_recent.clear();
-    for (const auto& e : t) {
-      auto& set = recent_pthread_ids[e.m_thread];
-      set.insert(e.m_thread_name.data());
-    }
     _flush(t, true);
   }
 
