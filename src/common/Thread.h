@@ -65,8 +65,6 @@ class Thread {
 
 // Functions for with std::thread
 
-void set_thread_name(std::thread& t, const std::string& s);
-std::string get_thread_name(const std::thread& t);
 void kill(std::thread& t, int signal);
 
 template<typename Fun, typename... Args>
@@ -75,7 +73,7 @@ std::thread make_named_thread(std::string_view n,
 			      Args&& ...args) {
 
   return std::thread([n = std::string(n)](auto&& fun, auto&& ...args) {
-		       ceph_pthread_setname(pthread_self(), n.data());
+		       ceph_pthread_setname(n.data());
 		       std::invoke(std::forward<Fun>(fun),
 				   std::forward<Args>(args)...);
 		     }, std::forward<Fun>(fun), std::forward<Args>(args)...);

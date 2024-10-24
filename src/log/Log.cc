@@ -500,7 +500,8 @@ void Log::dump_recent()
     t.insert(t.end(), std::make_move_iterator(m_recent.begin()), std::make_move_iterator(m_recent.end()));
     m_recent.clear();
     for (const auto& e : t) {
-      recent_pthread_ids.emplace(e.m_thread);
+      auto& set = recent_pthread_ids[e.m_thread];
+      set.insert(e.m_thread_name.data());
     }
     _flush(t, true);
   }
