@@ -31,6 +31,7 @@
 
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <fmt/ranges.h>
 
 #define MAX_LOG_BUF 65536
 
