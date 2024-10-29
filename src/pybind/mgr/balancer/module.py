@@ -387,12 +387,10 @@ class Module(MgrModule):
             'optimize_result': self.optimize_result,
             'no_optimization_needed': self.no_optimization_needed,
             'mode': self.get_module_option('mode'),
-            'pg_upmap_items_added': self.pg_upmap_items_added,
-            'pg_upmap_items_removed': self.pg_upmap_items_removed,
-            'pg_upmap_primaries_added': self.pg_upmap_primaries_added,
-            'pg_upmap_primaries_removed': self.pg_upmap_primaries_removed
+            'added_pg_upmap_items': self.added_pg_upmap_items,
+            'removed_pg_upmap_items': self.removed_pg_upmap_items,
         }
-        return (0, json.dumps(s, indent=4, sort_keys=True), '')
+        return (0, json.dumps(s, indent=4), '')
 
     @CLICommand('balancer mode')
     def set_mode(self, mode: Mode) -> Tuple[int, str, str]:
@@ -761,6 +759,9 @@ class Module(MgrModule):
                 start = time.time()
                 r, detail = self.optimize(plan)
                 end = time.time()
+                self.added_pg_upmap_items = [pg for pg in osdmap.dump().get('pg_upmap_items', '') if pg not in self.last_pg_upmap]
+                self.removed_pg_upmap_items = [pg for pg in self.last_pg_upmap if pg not in osdmap.dump().get('pg_upmap_items', '')]
+                self.last_pg_upmap = osdmap.dump().get('pg_upmap_items', '')
                 self.last_optimize_duration = str(datetime.timedelta(seconds=(end - start)))
                 if r == 0:
                     self.optimize_result = self.success_string
