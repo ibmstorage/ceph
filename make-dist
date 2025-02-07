@@ -201,13 +201,12 @@ download_liburing 0.7 8e2842cfe947f3a443af301bdd6d034455536c38a455c7a700d0c1ad16
 pmdk_version=1.10
 download_pmdk $pmdk_version 08dafcf94db5ac13fac9139c92225d9aa5f3724ea74beee4e6ca19a01a2eb20c \
                https://github.com/pmem/pmdk/releases/download/$pmdk_version
-build_dashboard_frontend
+#build_dashboard_frontend
 generate_rook_ceph_client
 for tarball in $outfile.version   \
                $outfile.boost     \
                $outfile.liburing  \
                $outfile.pmdk  \
-               dashboard_frontend \
                rook_ceph_client   \
                $outfile; do
     tar --concatenate -f $outfile.all.tar $tarball.tar
