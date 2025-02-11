@@ -147,6 +147,39 @@ build_dashboard_frontend() {
   tar cf dashboard_frontend.tar $outfile/src/pybind/mgr/dashboard/frontend/dist
 }
 
+build_dashboard_frontend_downstream() {
+    CURR_DIR=`pwd`
+    TEMP_DIR=`mktemp -d`
+    $CURR_DIR/src/tools/setup-virtualenv.sh --python=python3 $TEMP_DIR
+    $TEMP_DIR/bin/pip install nodeenv
+
+    COMMIT=$(git rev-parse HEAD)
+
+    readonly NODEJS_VERSION=$(sed -nE 's/^.*nodeenv[^0-9]+([0-9.]+)$/\1/p' make-dist)
+    $TEMP_DIR/bin/nodeenv -p --node="${NODEJS_VERSION}"
+    cd src/pybind/mgr/dashboard/frontend
+    . $TEMP_DIR/bin/activate
+    export NODE_OPTIONS=--max_old_space_size=4096
+
+    NG_CLI_ANALYTICS=false npm ci
+    if [[ $BRANCH == ceph-6.0-rhel-9 ]]; then
+      npm run build -- --prod --progress=false
+    else
+      npm run build:all -- --progress=false
+    fi
+    deactivate
+    cd $CURR_DIR
+    rm -rf $TEMP_DIR
+    # If we have an IBM-branded dashboard, package it.
+    if [[ -d src/pybind/mgr/dashboard/frontend/dist-ibm ]]; then
+      tar czf redhat_dashboard_frontend-${version}-${COMMIT}.tar.gz src/pybind/mgr/dashboard/frontend/dist-redhat
+      tar czf ibm_dashboard_frontend-${version}-${COMMIT}.tar.gz src/pybind/mgr/dashboard/frontend/dist-ibm
+      DASHBOARD=ibm_dashboard_frontend-${version}-${COMMIT}
+    else
+      tar czf dashboard_frontend-${version}-${COMMIT}.tar.gz src/pybind/mgr/dashboard/frontend/dist
+    fi
+}
+
 generate_rook_ceph_client() {
   $outfile/src/pybind/mgr/rook/generate_rook_ceph_client.sh
   tar cf rook_ceph_client.tar $outfile/src/pybind/mgr/rook/rook_client/*.py
@@ -202,11 +235,13 @@ pmdk_version=1.10
 download_pmdk $pmdk_version 08dafcf94db5ac13fac9139c92225d9aa5f3724ea74beee4e6ca19a01a2eb20c \
                https://github.com/pmem/pmdk/releases/download/$pmdk_version
 #build_dashboard_frontend
+build_dashboard_frontend_downstream
 generate_rook_ceph_client
 for tarball in $outfile.version   \
                $outfile.boost     \
                $outfile.liburing  \
                $outfile.pmdk  \
+               $DASHBOARD \
                rook_ceph_client   \
                $outfile; do
     tar --concatenate -f $outfile.all.tar $tarball.tar
