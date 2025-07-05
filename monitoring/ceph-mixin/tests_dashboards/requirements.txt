@@ -8,5 +8,5 @@ typing-extensions==3.10.0.2
 termcolor==1.1.0
 types-termcolor==1.1.2
 dataclasses==0.6
-types-dataclasses==0.6.1
+types-dataclasses==0.6.6
 prettytable==2.4.0
