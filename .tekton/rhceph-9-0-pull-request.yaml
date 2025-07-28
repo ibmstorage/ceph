@@ -36,11 +36,12 @@ spec:
     resolver: git
     params:
       - name: url
-        value: "https://github.com/konflux-ci/rpmbuild-pipeline.git"
+        #value: "https://github.com/konflux-ci/rpmbuild-pipeline.git"
+        value: "https://gitlab.cee.redhat.com/rhel-on-konflux/rpmbuild-pipeline.git"
       - name: revision
         value: main
       - name: pathInRepo
-        value: pipeline/build-rpm-package.yaml
+        value: pipeline/build-rhel-package.yaml
   taskRunTemplate:
     serviceAccountName: build-pipeline-rhceph-9-0
   workspaces:
