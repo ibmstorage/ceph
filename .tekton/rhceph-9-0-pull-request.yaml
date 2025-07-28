@@ -41,6 +41,8 @@ spec:
         value: main
       - name: pathInRepo
         value: pipeline/build-rpm-package.yaml
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-rhceph-9-0
   workspaces:
     - name: git-auth
       secret:
