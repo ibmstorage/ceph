@@ -22,7 +22,7 @@ spec:
   params:
     - name: ociStorage
       #value: quay.io/redhat-user-workloads/rpm-build-pipeline-tenant/rhceph-test-package:on-pr-{{ pull_request_number }}-{{revision}}
-      value: quay.io/rhceph-dev/rhceph:on-pr-{{revision}}-rpms
+      value: quay.io/rhceph-ci/rhceph-rpms:on-pr-{{revision}}-rpms
       #value: quay.io/redhat-user-workloads/rhceph-rpms/rhceph:on-pr-{{revision}}
     - name: package-name
       value: rhceph
