@@ -26,6 +26,8 @@ spec:
       #value: quay.io/redhat-user-workloads/rhceph-rpms/rhceph:on-pr-{{revision}}
     - name: package-name
       value: rhceph
+    - name: koji-target
+      value: ceph-9-rhel-10
     - name: git-url
       value: "{{ source_url }}"
     - name: revision
@@ -42,6 +44,8 @@ spec:
         value: main
       - name: pathInRepo
         value: pipeline/build-rhel-package.yaml
+      - name: koji-target
+        value: ceph-9-rhel-10
   taskRunTemplate:
     serviceAccountName: build-pipeline-rhceph-9-0
   workspaces:
