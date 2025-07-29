@@ -25,7 +25,7 @@ spec:
       value: quay.io/rhceph-ci/rhceph-rpms:on-pr-{{revision}}-rpms
       #value: quay.io/redhat-user-workloads/rhceph-rpms/rhceph:on-pr-{{revision}}
     - name: package-name
-      value: rhceph
+      value: ceph
     - name: koji-target
       value: ceph-9-rhel-10
     - name: git-url
