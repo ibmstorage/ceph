@@ -233,7 +233,8 @@ License:	LGPL-2.1 and LGPL-3.0 and CC-BY-SA-3.0 and GPL-2.0 and BSL-1.0 and BSD-
 Group:		System/Filesystems
 %endif
 URL:		http://ceph.com/
-Source0:	%{?_remote_tarball_prefix}@TARBALL_BASENAME@.tar.bz2
+# Source0:	%{?_remote_tarball_prefix}@TARBALL_BASENAME@.tar.bz2
+Source0:    ceph-20.0.0-pre.ibm-0-g3d911bce7d6.tar.bz2
 %if 0%{?suse_version}
 # _insert_obs_source_lines_here
 ExclusiveArch:  x86_64 aarch64 ppc64le s390x riscv64
