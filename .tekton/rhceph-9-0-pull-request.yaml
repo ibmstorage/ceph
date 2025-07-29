@@ -34,6 +34,9 @@ spec:
       value: "{{ revision }}"
     - name: target-branch
       value: "{{ target_branch }}"
+    - name: build-architectures
+      value:
+        - x86_64
   pipelineRef:
     resolver: git
     params:
