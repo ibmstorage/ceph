@@ -28,6 +28,8 @@ spec:
       value: ceph
     - name: koji-target
       value: ceph-9.0-rhel-10-candidate
+    - name: koji-build-target
+      value: ceph-9.0-rhel-10-candidate
     - name: git-url
       value: "{{ source_url }}"
     - name: revision
@@ -47,8 +49,6 @@ spec:
         value: main
       - name: pathInRepo
         value: pipeline/build-rhel-package.yaml
-      - name: koji-target
-        value: ceph-9-rhel-10
   taskRunTemplate:
     serviceAccountName: build-pipeline-rhceph-9-0
   workspaces:
