@@ -39,6 +39,9 @@ spec:
     - name: build-architectures
       value:
         - x86_64
+        - aarch64
+        - s390x
+        - ppc64le
   pipelineRef:
     resolver: git
     params:
