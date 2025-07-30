@@ -44,9 +44,10 @@ spec:
     params:
       - name: url
         #value: "https://github.com/konflux-ci/rpmbuild-pipeline.git"
-        value: "https://gitlab.cee.redhat.com/rhel-on-konflux/rpmbuild-pipeline.git"
+        #value: "https://gitlab.cee.redhat.com/rhel-on-konflux/rpmbuild-pipeline.git"
+        value: "https://gitlab.cee.redhat.com/ceph/rpmbuild-pipeline.git"
       - name: revision
-        value: main
+        value: ceph-9.0
       - name: pathInRepo
         value: pipeline/build-rhel-package.yaml
   taskRunTemplate:
