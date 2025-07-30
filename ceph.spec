@@ -218,7 +218,7 @@
 #################################################################################
 Name:		ceph
 Version:    20.0.0
-Release:	0%{?dist}
+Release:	0.pre.ibm%{?dist}
 %if 0%{?fedora} || 0%{?rhel}
 Epoch:		2
 %endif
