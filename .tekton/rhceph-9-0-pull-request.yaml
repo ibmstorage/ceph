@@ -27,9 +27,7 @@ spec:
     - name: package-name
       value: ceph
     - name: koji-target
-      value: ceph-9.0-rhel-10-candidate
-    - name: koji-build-target
-      value: ceph-9.0-rhel-10-candidate
+      value: ceph-9.0-rhel-10-buildrequires
     - name: git-url
       value: "{{ source_url }}"
     - name: revision
