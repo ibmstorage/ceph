@@ -524,8 +524,11 @@ BuildRequires:  libcryptopp-devel
 BuildRequires:  libnuma-devel
 %endif
 %endif
-%if 0%{?rhel} >= 8
+%if 0%{?rhel} >= 8 && 0%{?rhel} < 10
 BuildRequires:  /usr/bin/pathfix.py
+%endif
+%if 0%{?rhel} >= 10
+BuildRequires:  /usr/lib/rpm/redhat/pathfix.py
 %endif
 
 %description
