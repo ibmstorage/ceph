@@ -141,7 +141,7 @@
     "stylelint-declaration-use-variable": "1.7.3",
     "table": "6.8.0",
     "transifex-i18ntool": "1.1.0",
-    "ts-node": "9.0.0",
+    "ts-node": "10.9.2",
     "typescript": "5.4.5",
     "validator": "13.12.0"
   },
