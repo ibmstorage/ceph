@@ -62,7 +62,7 @@
     "@patternfly/patternfly": "4.23.3",
     "@types/file-saver": "2.0.1",
     "async-mutex": "0.2.4",
-    "bootstrap": "5.3.2",
+    "bootstrap": "5.3.8",
     "carbon-components-angular": "5.56.2",
     "chart.js": "4.4.7",
     "chartjs-adapter-moment": "1.0.1",
