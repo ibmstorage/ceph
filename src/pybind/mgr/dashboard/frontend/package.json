@@ -100,7 +100,7 @@
     "@compodoc/compodoc": "1.1.18",
     "@cypress/browserify-preprocessor": "3.0.2",
     "@juggle/resize-observer": "3.4.0",
-    "@types/brace-expansion": "1.1.0",
+    "@types/brace-expansion": "1.1.2",
     "@types/cypress": "0.1.6",
     "@types/cypress-axe": "0.8.0",
     "@types/cypress-cucumber-preprocessor": "4.0.1",
