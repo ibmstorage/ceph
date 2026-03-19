@@ -1,4 +1,4 @@
-attrs==21.2.0
+attrs==26.1.0
 behave==1.2.6
 py==1.10.0
 pyparsing==2.4.7
