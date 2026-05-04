@@ -128,6 +128,18 @@ download_pmdk() {
 }
 
 build_dashboard_frontend() {
+  if [[ "$SKIP_DASHBOARD_BUILD" == "true" ]]; then
+    echo "Skipping dashboard frontend build (SKIP_DASHBOARD_BUILD=true)"
+    # Create empty tarball to satisfy the concatenation step
+    if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+      tar cf redhat_dashboard_frontend-${version}.tar --files-from /dev/null
+      tar cf ibm_dashboard_frontend-${version}.tar --files-from /dev/null
+    else
+      tar cf dashboard_frontend-${version}.tar --files-from /dev/null
+    fi
+    return
+  fi
+
   CURR_DIR=`pwd`
   TEMP_DIR=`mktemp -d`
 
