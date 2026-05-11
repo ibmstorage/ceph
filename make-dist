@@ -128,6 +128,18 @@ download_pmdk() {
 }
 
 build_dashboard_frontend() {
+  if [[ "$SKIP_DASHBOARD_BUILD" == "true" ]]; then
+    echo "Skipping dashboard frontend build (SKIP_DASHBOARD_BUILD=true)"
+    # Create empty tarball to satisfy the concatenation step
+    if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+      tar cf redhat_dashboard_frontend-${version}.tar --files-from /dev/null
+      tar cf ibm_dashboard_frontend-${version}.tar --files-from /dev/null
+    else
+      tar cf dashboard_frontend-${version}.tar --files-from /dev/null
+    fi
+    return
+  fi
+
   CURR_DIR=`pwd`
   TEMP_DIR=`mktemp -d`
 
@@ -138,14 +150,26 @@ build_dashboard_frontend() {
 
   . $TEMP_DIR/bin/activate
   NG_CLI_ANALYTICS=false timeout 1h npm ci
-  echo "Building ceph-dashboard frontend with build:localize script";
   # we need to use "--" because so that "--configuration production"
   # survives accross all scripts redirections inside package.json
-  DASHBOARD_FRONTEND_LANGS="ALL" npm run build:localize -- --configuration production
+  if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+    echo "Building ceph-dashboard frontend with build:all script";
+    DASHBOARD_FRONTEND_LANGS="ALL" npm run build:all -- --progress=false
+  else
+    echo "Building ceph-dashboard frontend with build:localize script";
+    DASHBOARD_FRONTEND_LANGS="ALL" npm run build:localize -- --configuration production
+  fi
   deactivate
   cd $CURR_DIR
   rm -rf $TEMP_DIR
-  tar cf dashboard_frontend.tar $outfile/src/pybind/mgr/dashboard/frontend/dist
+  # If we have an IBM-branded dashboard, package it.
+  if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+    tar cf redhat_dashboard_frontend-${version}.tar $outfile/src/pybind/mgr/dashboard/frontend/dist-redhat
+    tar cf ibm_dashboard_frontend-${version}.tar $outfile/src/pybind/mgr/dashboard/frontend/dist-ibm
+  else
+    tar cf dashboard_frontend-${version}.tar $outfile/src/pybind/mgr/dashboard/frontend/dist
+  fi
+
 }
 
 generate_rook_ceph_client() {
@@ -182,6 +206,11 @@ if [ -r /etc/os-release ]; then
     esac
 fi
 
+if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+  echo "using downstream spec file"
+  cp ceph.spec.in ceph.spec.upstream.in
+  cp ceph.spec.downstream.in ceph.spec.in
+fi
 for spec in ceph.spec.in; do
     cat $spec |
         sed "s/@PROJECT_VERSION@/$rpm_version/g" |
@@ -204,11 +233,16 @@ download_pmdk $pmdk_version 08dafcf94db5ac13fac9139c92225d9aa5f3724ea74beee4e6ca
                https://github.com/pmem/pmdk/releases/download/$pmdk_version
 build_dashboard_frontend
 generate_rook_ceph_client
+if [[ "$DOWNSTREAM_BUILD" == "true" ]]; then
+  dashboard_tarball="ibm_dashboard_frontend-${version} redhat_dashboard_frontend-${version}"
+else
+  dashboard_tarball="dashboard_frontend-${version}"
+fi
 for tarball in $outfile.version   \
                $outfile.boost     \
                $outfile.liburing  \
                $outfile.pmdk  \
-               dashboard_frontend \
+               $dashboard_tarball \
                rook_ceph_client   \
                $outfile; do
     tar --concatenate -f $outfile.all.tar $tarball.tar
