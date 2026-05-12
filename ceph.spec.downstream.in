@@ -1436,21 +1436,7 @@ This package provides a Ceph hardware monitoring agent.
 # common
 #################################################################################
 %prep
-%autosetup -p1
-%autosetup -T -D -b 1
-rm -rf src/pybind/mgr/dashboard/frontend/dist
-# Apply new dashboard dists
-%autosetup -T -D -a 2
-%autosetup -T -D -a 3
-
-%autosetup -T -D -a 4
-
-patch -p1 --fuzz=0 -i %{SOURCE102}
-
-# Rewrite .git_version file.
-echo %{commit} > src/.git_version
-echo %{version}-%{release} >> src/.git_version
-
+%autosetup -p1 -n @TARBALL_BASENAME@
 
 %build
 
