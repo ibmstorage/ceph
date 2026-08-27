@@ -9,7 +9,7 @@ pyyaml >= 5.1.2
 Cython
 pcpp
 prettytable
-sphinx-autodoc-typehints == 1.18.3
+sphinx-autodoc-typehints ==3.13.4
 sphinx-prompt
 sphinx_rtd_theme
 Sphinx-Substitution-Extensions
