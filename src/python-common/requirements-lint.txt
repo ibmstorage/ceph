@@ -1,2 +1,2 @@
-flake8==3.7.8
+flake8==7.4.0
 rstcheck==3.3.1
