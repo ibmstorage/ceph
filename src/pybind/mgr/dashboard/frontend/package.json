@@ -140,7 +140,7 @@
     "table": "6.8.0",
     "ts-node": "9.0.0",
     "typescript": "5.4.5",
-    "validator": "13.12.0"
+    "validator": "13.15.22"
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/e2e/common"
