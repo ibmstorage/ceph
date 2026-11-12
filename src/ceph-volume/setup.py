@@ -21,7 +21,7 @@ setup(
     dependency_links=[''.join(['file://', os.path.join(os.getcwd(), '../',
                                                        'python-common#egg=ceph-1.0.0')])],
     tests_require=[
-        'pytest >=2.1.3',
+        'pytest >=9.0.3',
         'tox',
         'ceph',
     ],
